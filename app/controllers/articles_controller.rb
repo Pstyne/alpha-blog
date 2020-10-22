@@ -74,7 +74,7 @@ class ArticlesController < ApplicationController
     end
 
     def require_same_user
-      if helpers.current_user != @article.user
+      if helpers.current_user != @article.user && !helpers.current_user.admin?
         flash[:alert] = "Access Denied"
         redirect_to @article
       end
