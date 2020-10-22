@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      flash[:notice] = "Account successfully created"
+      flash[:success] = "Account successfully created"
       redirect_to @user
     else
       render 'new'
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      flash[:notice] = "Account successfully updated"
+      flash[:success] = "Account successfully updated"
       redirect_to @user
     else
       render 'edit'
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     session[:user_id] = nil if @user == current_user
-    flash[:notice] = "Account with your articles were successfully deleted"
+    flash[:success] = "Account with your articles were successfully deleted"
     redirect_to articles_path
   end
 
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
 
     def require_same_user
       if helpers.current_user != @user && !helpers.current_user.admin?
-        flash[:alert] = "Access Denied"
+        flash[:danger] = "Access Denied"
         redirect_to @user
       end
     end
